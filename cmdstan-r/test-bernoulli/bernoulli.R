@@ -1,11 +1,11 @@
 data_list <- list(
   n = 100,
-  y = rnorm(100)
+  y = rbinom(100, 1, 0.3)
 )
 
 library(cmdstanr)
 
-file <- file.path("test_cmdstanr", "normal.stan")
+file <- file.path("test-bernoulli", "bernoulli.stan")
 mod  <- cmdstan_model(file)
 fit  <- mod$sample(
   dat = data_list,

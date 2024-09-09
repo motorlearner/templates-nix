@@ -58,16 +58,17 @@
           buildInputs = [
             which
             r
-            cmdstan
             cmdstanr
+            cmdstan
           ];
 
-          shellHook = ''
+          shellHook = 
+          ''
           echo shellHook running...
           export CMDSTAN=$(dirname $(dirname "$(which stan)"))/opt/cmdstan
           echo $CMDSTAN
-          Rscript cmdstan-r/test-bernoulli/test.R
-          Rscript cmdstan-r/test-normal/test.R
+          Rscript ./test-bernoulli/bernoulli.R
+          Rscript ./test-normal/normal.R
           '';
 
         };
