@@ -7,37 +7,37 @@ let
         inherit (pkgs) which;
       };
 
-      r = builtins.attrValues {
-        inherit (pkgs) R;
-        inherit (pkgs.rPackages) languageserver jsonlite;
-        inherit (pkgs.rPackages) box dplyr tidyr ggplot2 reticulate;
-      };
+  r = builtins.attrValues {
+    inherit (pkgs) R;
+    inherit (pkgs.rPackages) languageserver jsonlite;
+    inherit (pkgs.rPackages) box dplyr tidyr ggplot2 reticulate;
+  };
 
-      cmdstan = builtins.attrValues {
-        inherit (pkgs) cmdstan;
-      };
+  cmdstan = builtins.attrValues {
+    inherit (pkgs) cmdstan;
+  };
 
-      cmdstanr = [
-        (pkgs.rPackages.buildRPackage {
-          name = "cmdstanr";
-          src = pkgs.fetchgit {
-            url = "https://github.com/stan-dev/cmdstanr";
-            rev = "02259ef";
-            sha256 = "sha256-SNUJOqL18TIkPV/6hV7Ed/D/Z6iWrYzQhFpJIyXv9sk=";
-          };
-          propagatedBuildInputs = builtins.attrValues {
-            inherit (pkgs.rPackages) 
-              checkmate
-              data_table
-              jsonlite
-              posterior
-              processx
-              R6
-              withr
-              rlang;
-          };
-        })
-      ];
+  cmdstanr = [
+    (pkgs.rPackages.buildRPackage {
+      name = "cmdstanr";
+      src = pkgs.fetchgit {
+        url = "https://github.com/stan-dev/cmdstanr";
+        rev = "02259ef";
+        sha256 = "sha256-SNUJOqL18TIkPV/6hV7Ed/D/Z6iWrYzQhFpJIyXv9sk=";
+      };
+      propagatedBuildInputs = builtins.attrValues {
+        inherit (pkgs.rPackages) 
+          checkmate
+          data_table
+          jsonlite
+          posterior
+          processx
+          R6
+          withr
+          rlang;
+      };
+    })
+  ];
 
 in
   pkgs.mkShell {
@@ -53,7 +53,6 @@ in
     ''
     echo shellHook running...
     export CMDSTAN=$(dirname $(dirname "$(which stan)"))/opt/cmdstan
-    echo $CMDSTAN
     Rscript ./test-bernoulli/bernoulli.R
     Rscript ./test-normal/normal.R
     '';

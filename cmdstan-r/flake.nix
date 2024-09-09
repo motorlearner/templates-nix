@@ -66,7 +66,6 @@
           ''
           echo shellHook running...
           export CMDSTAN=$(dirname $(dirname "$(which stan)"))/opt/cmdstan
-          echo $CMDSTAN
           Rscript ./test-bernoulli/bernoulli.R
           Rscript ./test-normal/normal.R
           '';
